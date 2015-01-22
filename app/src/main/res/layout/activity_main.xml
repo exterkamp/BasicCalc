@@ -7,36 +7,35 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:text="7"
         android:id="@+id/key7"
-        android:layout_marginTop="165dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="8"
         android:id="@+id/key8"
-        android:layout_marginStart="50dp"
-        android:layout_alignTop="@+id/key7"
+        android:onClick="button_handler"
+        android:layout_above="@+id/key4"
         android:layout_toEndOf="@+id/key7"
-        android:onClick="button_handler" />
+        android:layout_alignTop="@+id/key7" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="9"
         android:id="@+id/key9"
+        android:onClick="button_handler"
+        android:layout_toEndOf="@+id/key8"
         android:layout_alignTop="@+id/key8"
-        android:layout_toStartOf="@+id/keyDiv"
-        android:layout_marginEnd="50dp"
-        android:onClick="button_handler" />
+        android:layout_above="@+id/key4" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -46,38 +45,41 @@
         android:id="@+id/keyDiv"
         android:layout_alignTop="@+id/key9"
         android:layout_alignParentEnd="true"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_toEndOf="@+id/key9"
+        android:layout_alignBottom="@+id/key9" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:text="4"
         android:id="@+id/key4"
-        android:layout_marginTop="40dp"
+        android:onClick="button_handler"
         android:layout_below="@+id/key7"
-        android:layout_alignParentStart="true"
-        android:onClick="button_handler" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="5"
         android:id="@+id/key5"
         android:layout_alignBottom="@+id/key4"
         android:layout_alignStart="@+id/key8"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignTop="@+id/key4" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="6"
         android:id="@+id/key6"
         android:layout_alignBottom="@+id/key5"
         android:layout_alignStart="@+id/key9"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignTop="@+id/key5" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -87,38 +89,41 @@
         android:id="@+id/keyMult"
         android:layout_alignBottom="@+id/key6"
         android:layout_alignStart="@+id/keyDiv"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/key6" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:text="1"
         android:id="@+id/key1"
+        android:onClick="button_handler"
         android:layout_below="@+id/key4"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp"
-        android:onClick="button_handler" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="2"
         android:id="@+id/key2"
         android:layout_alignTop="@+id/key1"
         android:layout_alignStart="@+id/key5"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignBottom="@+id/key1" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="3"
         android:id="@+id/key3"
         android:layout_alignTop="@+id/key2"
         android:layout_alignStart="@+id/key6"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignBottom="@+id/key2" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -128,38 +133,41 @@
         android:id="@+id/keySub"
         android:layout_alignTop="@+id/key3"
         android:layout_alignStart="@+id/keyMult"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignEnd="@+id/keyMult"
+        android:layout_alignBottom="@+id/key3" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:text="0"
         android:id="@+id/key0"
+        android:onClick="button_handler"
         android:layout_below="@+id/key1"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp"
-        android:onClick="button_handler" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="C"
         android:id="@+id/keyClr"
         android:layout_alignTop="@+id/key0"
         android:layout_alignStart="@+id/key2"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignBottom="@+id/key0" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="="
         android:id="@+id/keyEqu"
         android:layout_alignTop="@+id/keyClr"
         android:layout_alignStart="@+id/key3"
-        android:onClick="button_handler" />
+        android:onClick="button_handler"
+        android:layout_alignBottom="@+id/keyClr" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -169,7 +177,9 @@
         android:id="@+id/keyAdd"
         android:layout_alignBottom="@+id/keyEqu"
         android:layout_alignStart="@+id/keySub"
-        android:onClick="button_handler"/>
+        android:onClick="button_handler"
+        android:layout_alignEnd="@+id/keySub"
+        android:layout_alignTop="@+id/keyEqu" />
 
     <TextView
         android:layout_width="wrap_content"
