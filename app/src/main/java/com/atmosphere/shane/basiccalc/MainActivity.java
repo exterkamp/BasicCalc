@@ -41,25 +41,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mCurrentNumber = "0";
-
-
-        //mCurrentCount = getPreferences(MODE_PRIVATE).getLong(COUNT_KEY, 0);
         //get the reference for the textView
         mOutputText = (TextView) findViewById(R.id.outputText);
         updateOutput(mCurrentNumber);
-        //mSuffixSingular = " " + getResources().getString(R.string.click_singular);
-        //mSuffixPlural = " " + getResources().getString(R.string.click_plural);
-        //updateCounterText();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        //SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-        //editor.putLong(COUNT_KEY, mCurrentCount);
-        //editor.commit();
-
     }
 
     @Override
@@ -142,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
         }
 
-        String outputTextString = "";
+        //String outputTextString = "";
         //Toast.makeText(getBaseContext(), buttonText, Toast.LENGTH_SHORT).show();
         switch (buttonText){
             case "+":
@@ -152,7 +141,7 @@ public class MainActivity extends ActionBarActivity {
                 mEquStack.add(mCurrentNumber);
                 mCurrentNumber = "0";
                 mEquStack.add(buttonText);
-                outputTextString = buttonText;
+                //outputTextString = buttonText;
                 mInfixOutput = mInfixOutput + buttonText;
                 updateOutput(mInfixOutput);
                 break;
@@ -195,19 +184,15 @@ public class MainActivity extends ActionBarActivity {
                                         oldPrec = 1000;//if empty make the while exit
                                     }
                                 }
-
                                 //put new operator on stack
                                 operators.push(value);
                             }
-
                             break;
                         default:
                             output.add(value);
                             outputCounter++;
                             break;
                     }
-                    //whileCounter++;
-
                 }
                 //scan through the operators, make sure we got them all
                 while (!operators.empty())
@@ -259,9 +244,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 example = "" + evaluteStack.pop();
 
-                //Toast.makeText(getBaseContext(), example, Toast.LENGTH_SHORT).show();
-                outputTextString = example;
-                updateOutput(outputTextString);
+                updateOutput(example);
 
                 //reset the array and infix and mult button
                 if (!(((Button) findViewById(R.id.keyMult)).isEnabled()) && example.length() <= 5)
@@ -285,8 +268,8 @@ public class MainActivity extends ActionBarActivity {
                 //reset the array and infix
                 mEquStack = new ArrayList<String>();
                 mInfixOutput = "";
-                outputTextString = mCurrentNumber;
-                updateOutput(outputTextString);
+                //outputTextString = mCurrentNumber;
+                updateOutput(mCurrentNumber);
                 break;
             default:
                 //delete the stlye 0
@@ -304,7 +287,6 @@ public class MainActivity extends ActionBarActivity {
                     }
                     if (canEnter) {
                         mCurrentNumber = mCurrentNumber + buttonText;
-                        outputTextString = mCurrentNumber;
                         mInfixOutput = mInfixOutput + buttonText;
                         updateOutput(mInfixOutput);
                     }
@@ -315,10 +297,6 @@ public class MainActivity extends ActionBarActivity {
                 }
                 break;
         }
-        //update output text
-        //updateOutput(outputTextString);
-
-        //Toast.makeText(getBaseContext(), currentNumber, Toast.LENGTH_SHORT).show();
 
     }
 
