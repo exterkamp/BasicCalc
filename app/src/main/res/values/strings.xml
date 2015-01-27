@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">BasicCalc</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="backSpace">Backspace</string>
+    <string name="clear">Clear</string>
     <string name="action_settings">Settings</string>
 
 </resources>
