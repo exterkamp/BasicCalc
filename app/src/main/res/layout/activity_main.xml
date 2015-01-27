@@ -145,29 +145,31 @@
         android:id="@+id/key0"
         android:onClick="button_handler"
         android:layout_below="@+id/key1"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/keyEqu" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:text="C"
+        android:text="Clear"
         android:id="@+id/keyClr"
-        android:layout_alignTop="@+id/key0"
-        android:layout_alignStart="@+id/key2"
         android:onClick="button_handler"
-        android:layout_alignBottom="@+id/key0" />
+        android:layout_alignBottom="@+id/keyBack"
+        android:layout_alignTop="@+id/keyBack"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/keyBack" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="75dp"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:text="="
         android:id="@+id/keyEqu"
-        android:layout_alignTop="@+id/keyClr"
-        android:layout_alignStart="@+id/key3"
         android:onClick="button_handler"
-        android:layout_alignBottom="@+id/keyClr" />
+        android:layout_alignTop="@+id/key0"
+        android:layout_toStartOf="@+id/keyAdd"
+        android:layout_alignBottom="@+id/key0" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
