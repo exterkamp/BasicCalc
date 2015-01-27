@@ -138,116 +138,37 @@ public class MainActivity extends ActionBarActivity {
         //String outputTextString = "";
         //Toast.makeText(getBaseContext(), buttonText, Toast.LENGTH_SHORT).show();
         switch (buttonText){
+            case "*":
+                mEquStack.add(mCurrentNumber);
+                mCurrentNumber = "0";
+                mEquStack.add(buttonText);
+                updateOutput();
+                if ((buildInfix().length() - buildInfix().replaceAll("\\*", "").length()) > 2)
+                {
+                    Toast.makeText(getBaseContext(), "Max multiplications reached", Toast.LENGTH_SHORT).show();
+                    ((Button) findViewById(R.id.keyMult)).setEnabled(false);
+                    break;
+                }
+                break;
             case "+":
             case "-":
-            case "*":
             case "/":
                 mEquStack.add(mCurrentNumber);
                 mCurrentNumber = "0";
                 mEquStack.add(buttonText);
-                //outputTextString = buttonText;
-                //mInfixOutput = mInfixOutput + buttonText;
                 updateOutput();
                 break;
             case "=":
                 mEquStack.add(mCurrentNumber);
                 mCurrentNumber = "";
-                //parse the infix notation stack into postfix
-                Stack<String> operators = new Stack<String>();
-                ArrayList<String> output = new ArrayList<String>();
-                //int whileCounter = 0;
-                int outputCounter = 0;
-                for (String value: mEquStack)
-                {
-                    //String value = mEquStack.get(whileCounter);
-                    switch (value)
-                    {
-                        case "+":
-                        case "-":
-                        case "*":
-                        case "/":
-                            //check if stack empty
-                            if (operators.empty()){operators.push(value);}
-                            else {
-                                //check precedence
-                                int oldPrec = mPrecedence.indexOf(operators.peek());
-                                int newPrec = mPrecedence.indexOf(value);
 
-                                while (newPrec >= oldPrec)//the new one is of lower precedence
-                                {
-                                    //pop off the oldPrec from the stack and add it to the output
-                                    output.add(operators.pop());
-                                    outputCounter++;
+                //call function to make the postfix
+                ArrayList<String> output = makePostfix(mEquStack);
 
-                                    //get new precedences if not empty
-                                    if (!(operators.empty())) {
-                                        oldPrec = mPrecedence.indexOf(operators.peek());  
-                                    }
-                                    else
-                                    {
-                                        oldPrec = 1000;//if empty make the while exit
-                                    }
-                                }
-                                //put new operator on stack
-                                operators.push(value);
-                            }
-                            break;
-                        default:
-                            output.add(value);
-                            outputCounter++;
-                            break;
-                    }
-                }
-                //scan through the operators, make sure we got them all
-                while (!operators.empty())
-                {
-                    output.add(operators.pop());
-                    outputCounter++;
-                }
+                //call function to make the solved postfix
+                String example = evaluatePostfix(output);
 
-                //then evaluate it
-                String example = "";
-                Stack<Long> evaluteStack = new Stack<Long>();
-                for (String s: output)
-                {
-                    Long operand1 = new Long(0);
-                    Long operand2 = new Long(0);
-                    switch (s)
-                    {
-                        case "+":
-                            operand2 = evaluteStack.pop();
-                            operand1 = evaluteStack.pop();
-                            evaluteStack.push((operand1 + operand2));
-                            break;
-                        case "-":
-                            operand2 = evaluteStack.pop();
-                            operand1 = evaluteStack.pop();
-                            evaluteStack.push((operand1 - operand2));
-                            break;
-                        case "*":
-                            operand2 = evaluteStack.pop();
-                            operand1 = evaluteStack.pop();
-                            try {
-                                evaluteStack.push((operand1 * operand2));
-                            } catch (ArithmeticException e){
-                                Toast.makeText(getBaseContext(), "Exception", Toast.LENGTH_SHORT).show();
-                                break;
-                            }
-                            break;
-                        case "/":
-                            operand2 = evaluteStack.pop();
-                            operand1 = evaluteStack.pop();
-                            if (operand2 == 0) {operand2 = new Long(1);}
-                            evaluteStack.push((operand1 / operand2));
-                            break;
-                        default:
-                            evaluteStack.push(Long.parseLong(s));
-                            break;
-                    }
-
-                }
-                example = "" + evaluteStack.pop();
-
+                //update display with solved equation
                 updateOutput(example);
 
                 //reset the array and infix and mult button
@@ -259,9 +180,9 @@ public class MainActivity extends ActionBarActivity {
                 {
                     ((Button) findViewById(R.id.keyMult)).setEnabled(false);
                 }
+
                 mEquStack = new ArrayList<String>();
                 mCurrentNumber = example;
-                //mInfixOutput = example;
                 break;
             case "C":
                 mCurrentNumber = "0";
@@ -301,17 +222,27 @@ public class MainActivity extends ActionBarActivity {
                         }
                     }
                 }
-                //else if (mEquStack.size() > 1) {
-                //    mEquStack.remove(mEquStack.size()-1);
-                    //mCurrent = new number
-
-                //}
-                //if there is no mCurrentNumber
-
-                //check for empty
                 if (mCurrentNumber.length() == 0 && mEquStack.size() == 0)
                 {
                     mCurrentNumber = "0";
+                }
+
+                //update the mult button
+                if (!(((Button) findViewById(R.id.keyMult)).isEnabled()) && mCurrentNumber.length() <= 5)
+                {
+                    ((Button) findViewById(R.id.keyMult)).setEnabled(true);
+                }
+                if (mCurrentNumber.length() > 5)
+                {
+                    ((Button) findViewById(R.id.keyMult)).setEnabled(false);
+                }
+                if ((buildInfix().length() - buildInfix().replaceAll("\\*", "").length()) > 2)
+                {
+                    ((Button) findViewById(R.id.keyMult)).setEnabled(false);
+                }
+                else
+                {
+                    ((Button) findViewById(R.id.keyMult)).setEnabled(true);
                 }
 
                 updateOutput();
@@ -321,15 +252,20 @@ public class MainActivity extends ActionBarActivity {
                 boolean canEnter = true;
                 if (mCurrentNumber.equals("0")) {mCurrentNumber = "";}
                 if (mCurrentNumber.length() < 10) {
+                    //String infix = buildInfix();
                     if (mCurrentNumber.length() > 4)
                     {
+                        //if there are 3 *'s then done
                         ((Button) findViewById(R.id.keyMult)).setEnabled(false);
+
                         if (buildInfix().contains("*"))
                         {
                             canEnter = false;
                             Toast.makeText(getBaseContext(), "Maximum number of characters to multiply is 5", Toast.LENGTH_SHORT).show();
                         }
                     }
+
+
                     if (canEnter) {
                         mCurrentNumber = mCurrentNumber + buttonText;
                         //mInfixOutput = mInfixOutput + buttonText;
@@ -363,5 +299,107 @@ public class MainActivity extends ActionBarActivity {
         mOutputText.setText(s);
     }
 
+    private String evaluatePostfix(ArrayList<String> output){
+        String example = "";
+        Stack<Long> evaluteStack = new Stack<Long>();
+        //analyse the ArrayList's values
+        for (String s: output)
+        {
+            Long operand1 = new Long(0);
+            Long operand2 = new Long(0);
+            switch (s)
+            {
+                case "+":
+                    operand2 = evaluteStack.pop();
+                    operand1 = evaluteStack.pop();
+                    evaluteStack.push((operand1 + operand2));
+                    break;
+                case "-":
+                    operand2 = evaluteStack.pop();
+                    operand1 = evaluteStack.pop();
+                    evaluteStack.push((operand1 - operand2));
+                    break;
+                case "*":
+                    operand2 = evaluteStack.pop();
+                    operand1 = evaluteStack.pop();
+                    try {
+                        evaluteStack.push((operand1 * operand2));
+                    } catch (ArithmeticException e){
+                        Toast.makeText(getBaseContext(), "Exception", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    break;
+                case "/":
+                    operand2 = evaluteStack.pop();
+                    operand1 = evaluteStack.pop();
+                    if (operand2 == 0) {operand2 = new Long(1);}
+                    evaluteStack.push((operand1 / operand2));
+                    break;
+                default:
+                    evaluteStack.push(Long.parseLong(s));
+                    break;
+            }
+
+        }
+        example = "" + evaluteStack.pop();
+        return example;
+    }
+
+    private ArrayList<String> makePostfix(ArrayList<String> inputList){
+
+        Stack<String> operators = new Stack<String>();
+        ArrayList<String> output = new ArrayList<String>();
+        //int whileCounter = 0;
+        int outputCounter = 0;
+        for (String value: inputList)
+        {
+            //String value = mEquStack.get(whileCounter);
+            switch (value)
+            {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                    //check if stack empty
+                    if (operators.empty()){operators.push(value);}
+                    else {
+                        //check precedence
+                        int oldPrec = mPrecedence.indexOf(operators.peek());
+                        int newPrec = mPrecedence.indexOf(value);
+
+                        while (newPrec >= oldPrec)//the new one is of lower precedence
+                        {
+                            //pop off the oldPrec from the stack and add it to the output
+                            output.add(operators.pop());
+                            outputCounter++;
+
+                            //get new precedences if not empty
+                            if (!(operators.empty())) {
+                                oldPrec = mPrecedence.indexOf(operators.peek());
+                            }
+                            else
+                            {
+                                oldPrec = 1000;//if empty make the while exit
+                            }
+                        }
+                        //put new operator on stack
+                        operators.push(value);
+                    }
+                    break;
+                default:
+                    output.add(value);
+                    outputCounter++;
+                    break;
+            }
+        }
+        //scan through the operators, make sure we got them all
+        while (!operators.empty())
+        {
+            output.add(operators.pop());
+            outputCounter++;
+        }
+
+        return output;
+    }
 
 }
