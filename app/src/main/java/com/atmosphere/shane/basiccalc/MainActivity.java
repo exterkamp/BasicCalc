@@ -181,7 +181,7 @@ public class MainActivity extends ActionBarActivity {
 
                                     //get new precedences if not empty
                                     if (!(operators.empty())) {
-                                        oldPrec = mPrecedence.indexOf(operators.peek());
+                                        oldPrec = mPrecedence.indexOf(operators.peek());  
                                     }
                                     else
                                     {
