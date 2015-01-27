@@ -10,4 +10,4 @@ The basic four functions, addition, subtraction, Multiplication and Division are
 
 To get the calculator's functionality it reads the input in infix format and then converts it to postfix to solve.  The infix formula is stored in an Arraylist of Strings and holds each character as such to be read in later and solved.
 
-
+![Screenshot](https://github.com/exterkamps/BasicCalc/blob/master/screenshot.png "Screenshot")
