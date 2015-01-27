@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
     //the string of infix characters
     ArrayList<String> mEquStack = new ArrayList<String>();
     //the infix string made to keep track of operations
-    String mInfixOutput = "";
+    //String mInfixOutput = "";
     //precedence of operations
     String mPrecedence = "*/+-";
     //the current number stored as string
@@ -40,10 +40,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //mCurrentNumber = "0";
         mCurrentNumber = "0";
         //get the reference for the textView
         mOutputText = (TextView) findViewById(R.id.outputText);
-        updateOutput(mCurrentNumber);
+        updateOutput();
     }
 
     @Override
@@ -129,6 +130,9 @@ public class MainActivity extends ActionBarActivity {
             case R.id.keyEqu:
                 buttonText = "=";
                 break;
+            case R.id.keyBack:
+                buttonText = "<";
+                break;
         }
 
         //String outputTextString = "";
@@ -142,12 +146,12 @@ public class MainActivity extends ActionBarActivity {
                 mCurrentNumber = "0";
                 mEquStack.add(buttonText);
                 //outputTextString = buttonText;
-                mInfixOutput = mInfixOutput + buttonText;
-                updateOutput(mInfixOutput);
+                //mInfixOutput = mInfixOutput + buttonText;
+                updateOutput();
                 break;
             case "=":
                 mEquStack.add(mCurrentNumber);
-                mCurrentNumber = "0";
+                mCurrentNumber = "";
                 //parse the infix notation stack into postfix
                 Stack<String> operators = new Stack<String>();
                 ArrayList<String> output = new ArrayList<String>();
@@ -169,7 +173,7 @@ public class MainActivity extends ActionBarActivity {
                                 int oldPrec = mPrecedence.indexOf(operators.peek());
                                 int newPrec = mPrecedence.indexOf(value);
 
-                                while (newPrec > oldPrec)//the new one is of lower precedence
+                                while (newPrec >= oldPrec)//the new one is of lower precedence
                                 {
                                     //pop off the oldPrec from the stack and add it to the output
                                     output.add(operators.pop());
@@ -257,7 +261,7 @@ public class MainActivity extends ActionBarActivity {
                 }
                 mEquStack = new ArrayList<String>();
                 mCurrentNumber = example;
-                mInfixOutput = example;
+                //mInfixOutput = example;
                 break;
             case "C":
                 mCurrentNumber = "0";
@@ -267,9 +271,50 @@ public class MainActivity extends ActionBarActivity {
                 }
                 //reset the array and infix
                 mEquStack = new ArrayList<String>();
-                mInfixOutput = "";
+                //mInfixOutput = "";
                 //outputTextString = mCurrentNumber;
-                updateOutput(mCurrentNumber);
+                updateOutput();
+                break;
+            case "<":
+                //if there is a mCurrentNumber delete an element from it
+                if (mCurrentNumber.length() > 1){ mCurrentNumber = mCurrentNumber.substring(0,mCurrentNumber.length()-1);}
+                //if it is the last mCurrentNumber delete it and then make the next number the mCurrent Number
+                else if (mCurrentNumber.length() == 1) { mCurrentNumber = "";}
+                else if (mCurrentNumber.length() == 0){
+                    //get new mEquStack
+                    if (mEquStack.size() >= 1) {
+                        //test on the new stack
+                        String s = mEquStack.get(mEquStack.size()-1);
+                        //if it is an operator, remove it
+                        if ((s.contains("*") || s.contains("/") || s.contains("-") || s.contains("+"))){
+                            mEquStack.remove(mEquStack.size()-1);
+                            String s2 = mEquStack.get(mEquStack.size()-1);
+                            mCurrentNumber = s2;
+                            mEquStack.remove(mEquStack.size()-1);
+                        }
+                        //this should not happen, numbers shouldn't be next to numbers
+                        else
+                        {
+                            Toast.makeText(getBaseContext(), "Backspace Error", Toast.LENGTH_SHORT).show();
+                            mCurrentNumber = s;
+                            mEquStack.remove(s);
+                        }
+                    }
+                }
+                //else if (mEquStack.size() > 1) {
+                //    mEquStack.remove(mEquStack.size()-1);
+                    //mCurrent = new number
+
+                //}
+                //if there is no mCurrentNumber
+
+                //check for empty
+                if (mCurrentNumber.length() == 0 && mEquStack.size() == 0)
+                {
+                    mCurrentNumber = "0";
+                }
+
+                updateOutput();
                 break;
             default:
                 //delete the stlye 0
@@ -279,7 +324,7 @@ public class MainActivity extends ActionBarActivity {
                     if (mCurrentNumber.length() > 4)
                     {
                         ((Button) findViewById(R.id.keyMult)).setEnabled(false);
-                        if (mInfixOutput.contains("*"))
+                        if (buildInfix().contains("*"))
                         {
                             canEnter = false;
                             Toast.makeText(getBaseContext(), "Maximum number of characters to multiply is 5", Toast.LENGTH_SHORT).show();
@@ -287,8 +332,8 @@ public class MainActivity extends ActionBarActivity {
                     }
                     if (canEnter) {
                         mCurrentNumber = mCurrentNumber + buttonText;
-                        mInfixOutput = mInfixOutput + buttonText;
-                        updateOutput(mInfixOutput);
+                        //mInfixOutput = mInfixOutput + buttonText;
+                        updateOutput();
                     }
                 }
                 else
@@ -300,6 +345,23 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private String buildInfix() {
+        String builtInfix = "";
+        for (String s : mEquStack)
+        {
+            builtInfix = builtInfix + s;
+        }
+        builtInfix = builtInfix + mCurrentNumber;
+        return builtInfix;
+    }
+
+    private void updateOutput(){
+        mOutputText.setText(buildInfix());
+    }
+
     private void updateOutput(String s){
         mOutputText.setText(s);
-    }}
+    }
+
+
+}

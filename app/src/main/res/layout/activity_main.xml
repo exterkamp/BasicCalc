@@ -192,4 +192,14 @@
         android:layout_alignParentEnd="true"
         android:onClick="button_handler" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:text="Backspace"
+        android:id="@+id/keyBack"
+        android:layout_above="@+id/key9"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/key8"
+        android:onClick="button_handler" />
+
 </RelativeLayout>
