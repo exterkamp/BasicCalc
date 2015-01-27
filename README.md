@@ -1,6 +1,6 @@
-# BasicCalc A Calculator App
+# BasicCalc, A Calculator App
 
-BasicCalc is a simple 4 function calculator app for Android Kit Kat and above
+BasicCalc is a simple 4 function calculator app for Android Kit Kat and above.
 
 ##Features
 
