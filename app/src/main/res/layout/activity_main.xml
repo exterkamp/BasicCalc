@@ -149,10 +149,9 @@
         android:layout_toStartOf="@+id/keyEqu" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:text="Clear"
+        android:text="Clear "
         android:id="@+id/keyClr"
         android:onClick="button_handler"
         android:layout_alignBottom="@+id/keyBack"
